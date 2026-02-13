@@ -1,0 +1,105 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.15/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": ["**", "!docs/examples"]
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 100,
+		"lineEnding": "lf"
+	},
+	"linter": {
+		"enabled": true,
+		"domains": {
+			"next": "recommended",
+			"react": "recommended",
+			"test": "recommended"
+		},
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"noAccessKey": "warn",
+				"noAriaHiddenOnFocusable": "warn",
+				"noAriaUnsupportedElements": "warn",
+				"noAutofocus": "warn",
+				"noDistractingElements": "warn",
+				"noHeaderScope": "warn",
+				"noInteractiveElementToNoninteractiveRole": "warn",
+				"noNoninteractiveElementToInteractiveRole": "warn",
+				"noNoninteractiveTabindex": "warn",
+				"noPositiveTabindex": "warn",
+				"noRedundantAlt": "warn",
+				"noRedundantRoles": "warn",
+				"noSvgWithoutTitle": "warn",
+				"useAltText": "warn",
+				"useAnchorContent": "warn",
+				"useAriaActivedescendantWithTabindex": "warn",
+				"useAriaPropsForRole": "warn",
+				"useButtonType": "warn",
+				"useHeadingContent": "warn",
+				"useHtmlLang": "warn",
+				"useIframeTitle": "warn",
+				"useKeyWithClickEvents": "warn",
+				"useKeyWithMouseEvents": "warn",
+				"useMediaCaption": "warn",
+				"useValidAnchor": "warn",
+				"useValidAriaProps": "warn",
+				"useValidAriaRole": "warn",
+				"useValidAriaValues": "warn",
+				"useValidLang": "warn"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"level": "warn",
+					"fix": "safe",
+					"options": {
+						"attributes": ["className"],
+						"functions": ["clsx", "cva", "cn"]
+					}
+				}
+			},
+			"suspicious": {
+				"noExplicitAny": "error",
+				"noConsole": "warn",
+				"noUnknownAtRules": "off"
+			},
+			"style": {
+				"useNodejsImportProtocol": "off",
+				"noNonNullAssertion": "warn"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"jsxQuoteStyle": "double",
+			"semicolons": "asNeeded",
+			"trailingCommas": "all",
+			"arrowParentheses": "always",
+			"bracketSpacing": true,
+			"bracketSameLine": false
+		}
+	},
+	"json": {
+		"formatter": {
+			"trailingCommas": "none"
+		}
+	},
+	"css": {
+		"formatter": {
+			"enabled": true
+		},
+		"parser": {
+			"tailwindDirectives": true
+		}
+	}
+}
