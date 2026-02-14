@@ -1,5 +1,9 @@
 "use client"
 
+import { ChevronDown, ChevronUp, Download, LayoutGrid, LayoutList, Settings } from "lucide-react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import Link from "next/link"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { Achievement } from "@/components/routine/achievement-toast"
 import { AchievementToast } from "@/components/routine/achievement-toast"
 import { BlockCard } from "@/components/routine/block-card"
@@ -25,10 +29,6 @@ import {
 	loadSettings,
 	saveSettings,
 } from "@/lib/utils/settings"
-import { ChevronDown, ChevronUp, Download, LayoutGrid, LayoutList, Settings } from "lucide-react"
-import { AnimatePresence, motion, useReducedMotion } from "motion/react"
-import Link from "next/link"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 interface DisplayItem extends DayItem {
 	timeLabel: string

@@ -1,9 +1,9 @@
 "use client"
 
-import { TimeProgress } from "@/components/routine/time-progress"
-import { getAllTimeProgress } from "@/lib/utils/time-progress"
 import { motion } from "motion/react"
 import { useCallback, useEffect, useState } from "react"
+import { TimeProgress } from "@/components/routine/time-progress"
+import { getAllTimeProgress } from "@/lib/utils/time-progress"
 
 const TIME_ITEMS = [
 	{ key: "year", label: "Ano", color: "#22d3ee" },

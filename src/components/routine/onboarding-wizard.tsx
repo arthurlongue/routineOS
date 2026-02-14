@@ -1,6 +1,7 @@
 "use client"
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 
 interface OnboardingStep {
@@ -9,6 +10,12 @@ interface OnboardingStep {
 	description: string
 	primaryButton: string
 	secondaryAction?: "settings"
+}
+
+interface OnboardingWizardProps {
+	isOpen: boolean
+	onComplete: () => void
+	onSkip: () => void
 }
 
 const ONBOARDING_STEPS: OnboardingStep[] = [
@@ -41,153 +48,120 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
 	},
 ]
 
-interface OnboardingWizardProps {
-	isOpen: boolean
-	onComplete: () => void
-	onSkip: () => void
-	onGoToSettings?: () => void
-}
-
-export function OnboardingWizard({
-	isOpen,
-	onComplete,
-	onSkip,
-	onGoToSettings,
-}: OnboardingWizardProps) {
+export function OnboardingWizard({ isOpen, onComplete, onSkip }: OnboardingWizardProps) {
 	const [currentStep, setCurrentStep] = useState(0)
-	const [direction, setDirection] = useState(0)
-	const shouldReduceMotion = useReducedMotion()
+	const prefersReducedMotion = useReducedMotion()
+	const router = useRouter()
 
 	const step = ONBOARDING_STEPS[currentStep]
 	const isLastStep = currentStep === ONBOARDING_STEPS.length - 1
 	const isFirstStep = currentStep === 0
 
-	const paginate = useCallback(
-		(newDirection: number) => {
-			if (newDirection > 0 && isLastStep) {
-				onComplete()
-			} else if (newDirection > 0) {
-				setDirection(1)
-				setCurrentStep((prev) => prev + 1)
-			} else if (newDirection < 0 && !isFirstStep) {
-				setDirection(-1)
-				setCurrentStep((prev) => prev - 1)
-			}
-		},
-		[isFirstStep, isLastStep, onComplete],
-	)
+	const handleNext = useCallback(() => {
+		if (isLastStep) {
+			onComplete()
+		} else {
+			setCurrentStep((prev) => prev + 1)
+		}
+	}, [isLastStep, onComplete])
+
+	const handlePrevious = useCallback(() => {
+		if (!isFirstStep) {
+			setCurrentStep((prev) => prev - 1)
+		}
+	}, [isFirstStep])
 
 	const handleSettings = useCallback(() => {
-		if (onGoToSettings) {
-			onGoToSettings()
-		}
 		onComplete()
-	}, [onGoToSettings, onComplete])
+		router.push("/settings")
+	}, [onComplete, router])
 
 	const slideVariants = {
-		enter: (dir: number) => ({
-			x: shouldReduceMotion ? 0 : dir > 0 ? 300 : -300,
-			opacity: shouldReduceMotion ? 0 : 1,
+		enter: (direction: number) => ({
+			x: prefersReducedMotion ? 0 : direction > 0 ? 300 : -300,
+			opacity: 0,
 		}),
 		center: {
 			x: 0,
 			opacity: 1,
 		},
-		exit: (dir: number) => ({
-			x: shouldReduceMotion ? 0 : dir < 0 ? 300 : -300,
-			opacity: shouldReduceMotion ? 0 : 1,
+		exit: (direction: number) => ({
+			x: prefersReducedMotion ? 0 : direction > 0 ? -300 : 300,
+			opacity: 0,
 		}),
 	}
 
-	if (!isOpen) {
-		return null
-	}
+	if (!isOpen) return null
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center bg-base-300/80 backdrop-blur-sm">
 			<motion.div
-				initial={shouldReduceMotion ? {} : { scale: 0.95, opacity: 0 }}
-				animate={{ scale: 1, opacity: 1 }}
-				exit={shouldReduceMotion ? {} : { scale: 0.95, opacity: 0 }}
-				className="relative mx-4 w-full max-w-md overflow-hidden rounded-3xl border border-base-300 bg-base-100 shadow-2xl"
+				className="card relative mx-4 w-full max-w-md bg-base-100 shadow-xl"
+				initial={{ opacity: 0, scale: 0.95 }}
+				animate={{ opacity: 1, scale: 1 }}
+				exit={{ opacity: 0, scale: 0.95 }}
+				transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.2 }}
 			>
 				{/* Skip button */}
 				<button
 					type="button"
+					className="btn btn-ghost btn-sm absolute top-4 right-4 text-base-content/60 hover:text-base-content"
 					onClick={onSkip}
-					className="btn btn-ghost btn-sm absolute right-3 top-3 z-10 rounded-full text-base-content/60 hover:text-base-content"
 				>
 					Pular
 				</button>
 
 				{/* Content */}
-				<div className="overflow-hidden p-6 pt-12">
-					<AnimatePresence initial={false} custom={direction} mode="wait">
+				<div className="card-body items-center pt-12 text-center">
+					<AnimatePresence mode="wait" custom={1}>
 						<motion.div
 							key={currentStep}
-							custom={direction}
+							custom={1}
 							variants={slideVariants}
 							initial="enter"
 							animate="center"
 							exit="exit"
-							transition={{ duration: 0.3, ease: "easeInOut" }}
-							className="text-center"
+							transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.2 }}
+							className="flex flex-col items-center"
 						>
-							<div className="mb-4 text-6xl">{step.icon}</div>
-							<h2 className="mb-3 font-semibold text-2xl text-base-content">{step.title}</h2>
-							<p className="text-base-content/70 leading-relaxed">{step.description}</p>
+							<span className="mb-4 text-5xl">{step.icon}</span>
+							<h2 className="card-title mb-2 text-xl">{step.title}</h2>
+							<p className="text-base-content/70 text-sm leading-relaxed">{step.description}</p>
 						</motion.div>
 					</AnimatePresence>
-				</div>
 
-				{/* Progress dots */}
-				<div className="flex justify-center gap-2 pb-4">
-					{ONBOARDING_STEPS.map((stepItem, index) => (
-						<button
-							type="button"
-							key={stepItem.title}
-							onClick={() => {
-								setDirection(index > currentStep ? 1 : -1)
-								setCurrentStep(index)
-							}}
-							className={`h-2 rounded-full transition-all ${
-								index === currentStep
-									? "w-6 bg-primary"
-									: "w-2 bg-base-content/30 hover:bg-base-content/50"
-							}`}
-							aria-label={`Ir para passo ${index + 1}`}
-						/>
-					))}
-				</div>
+					{/* Progress dots */}
+					<div className="my-4 flex gap-2">
+						{ONBOARDING_STEPS.map((stepItem, index) => (
+							<button
+								type="button"
+								key={stepItem.title}
+								className={`h-2 w-2 rounded-full transition-colors ${
+									index === currentStep ? "bg-primary" : "bg-base-content/20"
+								}`}
+								onClick={() => setCurrentStep(index)}
+								aria-label={`Ir para etapa ${index + 1}`}
+							/>
+						))}
+					</div>
 
-				{/* Navigation buttons */}
-				<div className="flex gap-3 p-6 pt-2">
-					{!isFirstStep && (
+					{/* Buttons */}
+					<div className="mt-2 flex gap-2">
+						{!isFirstStep && (
+							<button type="button" className="btn btn-ghost" onClick={handlePrevious}>
+								Voltar
+							</button>
+						)}
 						<button
 							type="button"
-							onClick={() => paginate(-1)}
-							className="btn btn-outline btn-sm flex-1 rounded-xl"
+							className="btn btn-primary"
+							onClick={step.secondaryAction === "settings" ? handleSettings : handleNext}
 						>
-							Anterior
+							{step.primaryButton}
 						</button>
-					)}
-					<button
-						type="button"
-						onClick={() => paginate(1)}
-						className="btn btn-primary btn-sm flex-1 rounded-xl"
-					>
-						{step.primaryButton}
-					</button>
-					{step.secondaryAction === "settings" && (
-						<button
-							type="button"
-							onClick={handleSettings}
-							className="btn btn-ghost btn-sm rounded-xl"
-						>
-							Configurar
-						</button>
-					)}
+					</div>
 				</div>
 			</motion.div>
 		</div>
-	}
+	)
+}
