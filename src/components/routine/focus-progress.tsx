@@ -37,7 +37,11 @@ function DotsProgress({ completed, total, currentIndex }: DotsProgressProps) {
 	const dots = Array.from({ length: total }, (_, i) => i)
 
 	return (
-		<div className="flex flex-wrap items-center justify-center gap-1.5" role="progressbar" aria-label={`${completed} de ${total} tarefas concluídas`}>
+		<div
+			className="flex flex-wrap items-center justify-center gap-1.5"
+			role="progressbar"
+			aria-label={`${completed} de ${total} tarefas concluídas`}
+		>
 			{dots.map((index) => {
 				const isCompleted = index < completed
 				const isCurrent = index === currentIndex
@@ -49,11 +53,7 @@ function DotsProgress({ completed, total, currentIndex }: DotsProgressProps) {
 						animate={{ scale: isCurrent ? 1.2 : 1, opacity: 1 }}
 						transition={{ duration: 0.2 }}
 						className={`h-2 w-2 rounded-full ${
-							isCompleted
-								? "bg-success"
-								: isCurrent
-									? "bg-primary"
-									: "bg-base-content/20"
+							isCompleted ? "bg-success" : isCurrent ? "bg-primary" : "bg-base-content/20"
 						}`}
 					/>
 				)
@@ -75,8 +75,16 @@ function RingProgress({ completed, total }: RingProgressProps) {
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
 
 	return (
-		<div className="relative flex items-center justify-center" role="progressbar" aria-label={`${completed} de ${total} tarefas concluídas`} aria-valuenow={percentage} aria-valuemin={0} aria-valuemax={100}>
-			<svg className="h-12 w-12 -rotate-90 transform" viewBox="0 0 44 44">
+		<div
+			className="relative flex items-center justify-center"
+			role="progressbar"
+			aria-label={`${completed} de ${total} tarefas concluídas`}
+			aria-valuenow={percentage}
+			aria-valuemin={0}
+			aria-valuemax={100}
+		>
+			<svg className="h-12 w-12 -rotate-90 transform" viewBox="0 0 44 44" aria-hidden="true">
+				<title>{`${completed} de ${total} tarefas concluídas`}</title>
 				{/* Background circle */}
 				<circle
 					cx="22"
@@ -117,7 +125,11 @@ interface TextProgressProps {
 
 function TextProgress({ completed, total }: TextProgressProps) {
 	return (
-		<span className="font-medium text-sm" role="progressbar" aria-label={`${completed} de ${total} tarefas concluídas`}>
+		<span
+			className="font-medium text-sm"
+			role="progressbar"
+			aria-label={`${completed} de ${total} tarefas concluídas`}
+		>
 			{completed}/{total}
 		</span>
 	)

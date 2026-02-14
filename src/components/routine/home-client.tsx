@@ -1,9 +1,5 @@
 "use client"
 
-import { ChevronDown, ChevronUp, Download, LayoutGrid, LayoutList, Settings } from "lucide-react"
-import { AnimatePresence, motion, useReducedMotion } from "motion/react"
-import Link from "next/link"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { Achievement } from "@/components/routine/achievement-toast"
 import { AchievementToast } from "@/components/routine/achievement-toast"
 import { BlockCard } from "@/components/routine/block-card"
@@ -29,6 +25,10 @@ import {
 	loadSettings,
 	saveSettings,
 } from "@/lib/utils/settings"
+import { ChevronDown, ChevronUp, Download, LayoutGrid, LayoutList, Settings } from "lucide-react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import Link from "next/link"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 interface DisplayItem extends DayItem {
 	timeLabel: string
@@ -420,15 +420,15 @@ export function HomeClient() {
 	}
 
 	return (
-		<div className="mx-auto w-full max-w-3xl px-4 pt-6 pb-28 md:px-6">
+		<div className="mx-auto w-full max-w-3xl px-4 pt-4 pb-28 md:px-6">
 			<div className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-72 bg-[radial-gradient(circle_at_15%_10%,rgb(34_211_238/0.12),transparent_40%),radial-gradient(circle_at_85%_0%,rgb(251_191_36/0.1),transparent_35%)]" />
 
 			{/* Collapsible Header */}
 			<motion.header
-				layout={shouldReduceMotion ? false : true}
-				className="mb-5 overflow-hidden rounded-3xl border border-base-300 bg-linear-to-br from-base-200/85 via-base-200/65 to-base-200/35 shadow-lg"
+				layout={!shouldReduceMotion}
+				className="mb-3 overflow-hidden rounded-2xl border border-base-300 bg-linear-to-br from-base-200/85 via-base-200/65 to-base-200/35 shadow-lg"
 			>
-				<motion.div layout className="p-4 md:p-5">
+				<motion.div layout className="px-4 py-3 md:px-5">
 					{/* Always visible: Collapsed state content */}
 					<div className="flex items-center justify-between gap-3">
 						<div className="flex items-center gap-3">
@@ -489,42 +489,41 @@ export function HomeClient() {
 								transition={{ duration: 0.3, ease: "easeInOut" }}
 								className="overflow-hidden"
 							>
-								<div className="mt-4">
-									<h1 className="font-semibold text-3xl text-base-content">O Trilho</h1>
-									<p className="mt-1 text-base-content/70 text-sm capitalize">{dateLabel}</p>
-									<p className="mt-2 text-base-content/70 text-xs">
-										Uma ação por vez. Sem fricção.
-									</p>
+								<div className="mt-3">
+									<div className="flex items-baseline gap-2">
+										<h1 className="font-semibold text-base-content text-xl">O Trilho</h1>
+										<span className="text-base-content/50 text-xs capitalize">{dateLabel}</span>
+									</div>
 								</div>
 
-								<div className="mt-4 flex flex-wrap gap-2">
+								<div className="mt-3 flex items-center gap-1.5">
 									<Link
 										href="/settings"
-										className="btn btn-outline btn-sm min-h-11 rounded-xl border-base-300 bg-base-100/65"
+										className="btn btn-ghost btn-sm btn-square rounded-lg"
+										title="Configurações"
 									>
-										<Settings className="mr-2 h-4 w-4" />
-										Configurações
+										<Settings className="h-4 w-4" />
 									</Link>
 									<Link
 										href="/tasks"
-										className="btn btn-outline btn-sm min-h-11 rounded-xl border-base-300 bg-base-100/65"
+										className="btn btn-ghost btn-sm btn-square rounded-lg"
+										title="Gerenciar"
 									>
-										<LayoutList className="mr-2 h-4 w-4" />
-										Gerenciar
+										<LayoutList className="h-4 w-4" />
 									</Link>
 									{installPrompt ? (
 										<button
 											type="button"
 											onClick={() => void onInstall()}
-											className="btn btn-info btn-sm min-h-11 rounded-xl"
+											className="btn btn-ghost btn-sm btn-square rounded-lg text-info"
+											title="Instalar"
 										>
-											<Download className="mr-2 h-4 w-4" />
-											Instalar
+											<Download className="h-4 w-4" />
 										</button>
 									) : null}
 								</div>
 
-								<div className="mt-4 flex flex-wrap gap-2">
+								<div className="mt-2.5 flex items-center gap-2 overflow-x-auto">
 									<SummaryPill label="Feitas" value={daySummary.completed} tone="success" />
 									<SummaryPill label="Em foco" value={daySummary.active} tone="info" />
 									<SummaryPill label="Restantes" value={daySummary.remaining} tone="ghost" />
@@ -538,7 +537,7 @@ export function HomeClient() {
 
 			{!isHeaderCollapsed && <TimeDashboard now={new Date()} />}
 
-			<main className="space-y-4">
+			<main className="space-y-3">
 				{settings.showFeedbackOnHome && !isHeaderCollapsed ? <TaskFeedback items={items} /> : null}
 				{viewMode === "focus" ? (
 					<FocusMode
@@ -631,16 +630,18 @@ interface SummaryPillProps {
 
 function SummaryPill({ label, value, tone }: SummaryPillProps) {
 	const toneClass = {
-		success: "border-success/40 bg-success/10 text-success",
-		info: "border-info/40 bg-info/10 text-info",
-		ghost: "border-base-300 bg-base-100/55 text-base-content/80",
-		neutral: "border-base-300 bg-base-100/65 text-base-content",
+		success: "border-success/30 bg-success/8 text-success",
+		info: "border-info/30 bg-info/8 text-info",
+		ghost: "border-base-300 bg-base-100/40 text-base-content/70",
+		neutral: "border-base-300 bg-base-100/50 text-base-content/90",
 	}[tone]
 
 	return (
-		<div className={`rounded-full border px-3 py-1.5 ${toneClass}`}>
-			<p className="text-[11px] uppercase tracking-wide">{label}</p>
-			<p className="font-semibold text-sm leading-none">{value}</p>
+		<div
+			className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border px-2.5 py-1 ${toneClass}`}
+		>
+			<span className="font-semibold text-xs tabular-nums">{value}</span>
+			<span className="text-[10px] uppercase tracking-wide opacity-75">{label}</span>
 		</div>
 	)
 }

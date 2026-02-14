@@ -599,11 +599,11 @@ async function normalizeSeedLabelsPtBr(): Promise<void> {
 	const db = getDb()
 	const now = new Date().toISOString()
 	const labelBySlug: Record<string, string> = {
-		"wind-down": "Desacelerar",
-		"deep-work-1": "Trabalho focado 1",
-		"deep-work-2": "Trabalho focado 2",
-		"meal-prep": "Preparo de refeições",
-		"weekly-review": "Revisão semanal",
+		desacelerar: "Desacelerar",
+		"trabalho-focado-1": "Trabalho focado 1",
+		"trabalho-focado-2": "Trabalho focado 2",
+		"preparo-refeicoes": "Preparo de refeições",
+		"revisao-semanal": "Revisão semanal",
 	}
 
 	const updates = Object.entries(labelBySlug).map(async ([slug, label]) => {

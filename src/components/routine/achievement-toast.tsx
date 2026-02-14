@@ -1,7 +1,7 @@
 "use client"
 
-import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { motion } from "motion/react"
+import { useEffect, useState } from "react"
 
 export interface Achievement {
 	id: string
@@ -56,11 +56,7 @@ export function AchievementToast({ achievement, onDismiss }: AchievementToastPro
 
 	if (prefersReducedMotion) {
 		return (
-			<div
-				className="fixed right-4 top-4 z-50 max-w-sm"
-				role="alert"
-				aria-live="polite"
-			>
+			<div className="fixed top-4 right-4 z-50 max-w-sm" role="alert" aria-live="polite">
 				<div className="alert alert-success shadow-lg">
 					<div className="flex items-center gap-3">
 						<span className="text-2xl" role="img" aria-hidden="true">
@@ -90,7 +86,7 @@ export function AchievementToast({ achievement, onDismiss }: AchievementToastPro
 			animate={{ opacity: 1, x: 0, scale: 1 }}
 			exit={{ opacity: 0, x: 100, scale: 0.9 }}
 			transition={{ type: "spring", damping: 20, stiffness: 300 }}
-			className="fixed right-4 top-4 z-50 max-w-sm"
+			className="fixed top-4 right-4 z-50 max-w-sm"
 			role="alert"
 			aria-live="polite"
 		>

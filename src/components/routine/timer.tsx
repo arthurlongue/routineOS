@@ -11,7 +11,13 @@ interface TimerProps {
 	minimal?: boolean
 }
 
-export function Timer({ durationSec, startedAt, onComplete, onCancel, minimal = false }: TimerProps) {
+export function Timer({
+	durationSec,
+	startedAt,
+	onComplete,
+	onCancel,
+	minimal = false,
+}: TimerProps) {
 	const [remainingSec, setRemainingSec] = useState(() =>
 		getInitialRemaining(durationSec, startedAt),
 	)
@@ -56,7 +62,7 @@ export function Timer({ durationSec, startedAt, onComplete, onCancel, minimal = 
 				progress={progress}
 				onToggleRunning={() => setIsRunning((prev) => !prev)}
 				onComplete={() => void onComplete(resolveElapsedMinutes(durationSec, startedAt))}
-				shouldReduceMotion={shouldReduceMotion}
+				shouldReduceMotion={shouldReduceMotion ?? false}
 			/>
 		)
 	}
@@ -130,9 +136,7 @@ function MinimalTimer({
 				}
 				className="relative"
 			>
-				<p className="font-mono text-5xl tracking-tight">
-					{formatRemaining(remainingSec)}
-				</p>
+				<p className="font-mono text-5xl tracking-tight">{formatRemaining(remainingSec)}</p>
 				{isRunning ? (
 					<motion.span
 						animate={{ opacity: [1, 0.5, 1] }}
@@ -141,7 +145,7 @@ function MinimalTimer({
 							repeat: Number.POSITIVE_INFINITY,
 							ease: "easeInOut",
 						}}
-						className="absolute -right-3 top-0 text-primary"
+						className="absolute top-0 -right-3 text-primary"
 					>
 						●
 					</motion.span>
@@ -160,18 +164,10 @@ function MinimalTimer({
 
 			{/* Action buttons */}
 			<div className="flex w-full gap-3">
-				<button
-					type="button"
-					onClick={onToggleRunning}
-					className="btn btn-outline btn-lg flex-1"
-				>
+				<button type="button" onClick={onToggleRunning} className="btn btn-outline btn-lg flex-1">
 					{isRunning ? "Pausar" : "Retomar"}
 				</button>
-				<button
-					type="button"
-					onClick={onComplete}
-					className="btn btn-success btn-lg flex-1"
-				>
+				<button type="button" onClick={onComplete} className="btn btn-success btn-lg flex-1">
 					Concluir
 				</button>
 			</div>

@@ -107,7 +107,7 @@ export function FocusMode({
 	return (
 		<div
 			ref={containerRef}
-			className="flex flex-col items-center gap-4"
+			className="flex min-h-[35vh] flex-col items-center justify-center gap-4"
 			onTouchStart={onTouchStart}
 			onTouchMove={onTouchMove}
 			onTouchEnd={onTouchEnd}
@@ -145,55 +145,62 @@ export function FocusMode({
 				})}
 			</div>
 
-			{/* Current task card */}
-			<motion.div
-				key={currentIndex}
-				initial={shouldReduceMotion ? {} : { opacity: 0, x: 100 }}
-				animate={{ opacity: 1, x: 0 }}
-				exit={shouldReduceMotion ? {} : { opacity: 0, x: -100 }}
-				transition={{ duration: 0.3, ease: "easeOut" }}
-				className="w-full"
-			>
-				<BlockCard
-					item={currentItem}
-					timeLabel={currentItem.timeLabel}
-					isActive={activeEntryId === currentItem.entry.id}
-					showTimer={timerEntryId === currentItem.entry.id}
-					timerSlot={timerEntryId === currentItem.entry.id ? timerSlot : null}
-					onComplete={() => onComplete(currentItem.entry.id)}
-					onSkip={() => onSkip(currentItem.entry.id)}
-					onUndo={() => onUndo(currentItem.entry.id)}
-					onStartTimer={() => onStartTimer(currentItem.entry.id)}
-					editHref={editHref(currentItem.block.id)}
-					setCardRef={(element) => {
-						cardRefs.current[currentItem.entry.id] = element
-					}}
-				/>
-			</motion.div>
-
-			{/* Navigation buttons */}
-			<div className="mt-4 flex items-center justify-between gap-4">
+			{/* Card with flanking navigation */}
+			<div className="flex w-full items-center gap-2">
 				<button
 					type="button"
 					onClick={() => onNavigate((currentIndex - 1 + items.length) % items.length)}
-					className="btn btn-circle btn-outline btn-lg min-h-12 w-12 shadow-lg"
+					className="btn btn-circle btn-ghost btn-sm shrink-0 opacity-60 hover:opacity-100"
 					aria-label="Tarefa anterior"
 				>
-					<ChevronLeft className="h-6 w-6" />
+					<ChevronLeft className="h-5 w-5" />
 				</button>
 
-				<p className="text-base-content/60 text-sm">
-					{currentIndex + 1} de {items.length}
-				</p>
+				<motion.div
+					key={currentIndex}
+					initial={shouldReduceMotion ? {} : { opacity: 0, x: 60 }}
+					animate={{ opacity: 1, x: 0 }}
+					exit={shouldReduceMotion ? {} : { opacity: 0, x: -60 }}
+					transition={{ duration: 0.25, ease: "easeOut" }}
+					className="min-w-0 flex-1"
+				>
+					<BlockCard
+						item={currentItem}
+						timeLabel={currentItem.timeLabel}
+						isActive={activeEntryId === currentItem.entry.id}
+						showTimer={timerEntryId === currentItem.entry.id}
+						timerSlot={timerEntryId === currentItem.entry.id ? timerSlot : null}
+						onComplete={() => onComplete(currentItem.entry.id)}
+						onSkip={() => onSkip(currentItem.entry.id)}
+						onUndo={() => onUndo(currentItem.entry.id)}
+						onStartTimer={() => onStartTimer(currentItem.entry.id)}
+						editHref={editHref(currentItem.block.id)}
+						setCardRef={(element) => {
+							cardRefs.current[currentItem.entry.id] = element
+						}}
+					/>
+				</motion.div>
 
 				<button
 					type="button"
 					onClick={() => onNavigate((currentIndex + 1) % items.length)}
-					className="btn btn-circle btn-outline btn-lg min-h-12 w-12 shadow-lg"
+					className="btn btn-circle btn-ghost btn-sm shrink-0 opacity-60 hover:opacity-100"
 					aria-label="Próxima tarefa"
 				>
-					<ChevronRight className="h-6 w-6" />
+					<ChevronRight className="h-5 w-5" />
 				</button>
+			</div>
+
+			{/* Counter + next up preview */}
+			<div className="flex flex-col items-center gap-1">
+				<p className="text-base-content/50 text-xs tabular-nums">
+					{currentIndex + 1} / {items.length}
+				</p>
+				{items[currentIndex + 1] && (
+					<p className="text-[10px] text-base-content/35">
+						Próxima: {items[currentIndex + 1].block.icon} {items[currentIndex + 1].block.label}
+					</p>
+				)}
 			</div>
 		</div>
 	)

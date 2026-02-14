@@ -10,20 +10,26 @@ export function ProgressBar({ completed, total, skipped }: ProgressBarProps) {
 	const progressMax = total === 0 ? 1 : total
 
 	return (
-		<div className="card border border-base-300 bg-base-200/70 shadow-sm">
-			<div className="card-body p-4">
-				<div className="flex items-center justify-between text-base-content/80 text-sm">
-					<p>
-						{completed}/{total} completados
-					</p>
-					<p>{percent}% do dia</p>
-				</div>
+		<div className="flex items-center gap-4">
+			<div className="flex-1">
 				<progress
-					className="progress progress-primary mt-2 w-full"
+					className="progress progress-primary w-full [&::-webkit-progress-bar]:h-2.5 [&::-webkit-progress-bar]:rounded-full"
 					value={done}
 					max={progressMax}
 				/>
-				<p className="text-base-content/60 text-xs">Pulos sem culpa: {skipped}</p>
+			</div>
+			<div className="flex items-center gap-3 text-base-content/70 text-xs">
+				<span className="tabular-nums">
+					{completed}/{total}
+				</span>
+				<span className="text-base-content/40">·</span>
+				<span className="tabular-nums">{percent}%</span>
+				{skipped > 0 && (
+					<>
+						<span className="text-base-content/40">·</span>
+						<span className="text-base-content/50">{skipped} pulos</span>
+					</>
+				)}
 			</div>
 		</div>
 	)

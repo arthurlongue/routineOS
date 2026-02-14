@@ -27,7 +27,7 @@ function buildWedgePath(cx: number, cy: number, r: number, percentage: number): 
 	return `M ${cx},${cy} L ${startX},${startY} A ${r},${r} 0 ${largeArc},1 ${endX},${endY} Z`
 }
 
-export function TimeProgress({ label, percentage, color, size = 56 }: TimeProgressProps) {
+export function TimeProgress({ label, percentage, color, size = 44 }: TimeProgressProps) {
 	const clampedPercentage = Math.min(100, Math.max(0, percentage))
 	const center = size / 2
 	const radius = size / 2 - 2

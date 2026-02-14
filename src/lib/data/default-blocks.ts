@@ -2,7 +2,7 @@ import type { SeedBlock } from "@/lib/types"
 
 export const DEFAULT_BLOCKS: SeedBlock[] = [
 	{
-		slug: "wake-up",
+		slug: "acordar",
 		label: "Acordar",
 		icon: "☀️",
 		color: "#facc15",
@@ -16,7 +16,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 99,
 	},
 	{
-		slug: "leave-workout",
+		slug: "sair-treino",
 		label: "Sair pro treino",
 		icon: "🚪",
 		color: "#facc15",
@@ -30,7 +30,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 99,
 	},
 	{
-		slug: "wind-down",
+		slug: "desacelerar",
 		label: "Desacelerar",
 		icon: "🌙",
 		color: "#22d3ee",
@@ -44,7 +44,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 99,
 	},
 	{
-		slug: "sleep",
+		slug: "dormir",
 		label: "Dormir",
 		icon: "😴",
 		color: "#0ea5e9",
@@ -58,7 +58,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 99,
 	},
 	{
-		slug: "workout-gym",
+		slug: "musculacao",
 		label: "Musculação",
 		icon: "🏋️",
 		color: "#ef4444",
@@ -71,7 +71,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 2,
 	},
 	{
-		slug: "workout-skate",
+		slug: "patins",
 		label: "Patins",
 		icon: "⛸️",
 		color: "#ef4444",
@@ -84,7 +84,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 2,
 	},
 	{
-		slug: "workout-run",
+		slug: "corrida",
 		label: "Corrida",
 		icon: "🏃",
 		color: "#ef4444",
@@ -97,7 +97,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 2,
 	},
 	{
-		slug: "shower",
+		slug: "banho",
 		label: "Banho",
 		icon: "🚿",
 		color: "#38bdf8",
@@ -110,7 +110,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 99,
 	},
 	{
-		slug: "shave",
+		slug: "barba",
 		label: "Barba",
 		icon: "🪒",
 		color: "#38bdf8",
@@ -123,7 +123,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 8,
 	},
 	{
-		slug: "meditation-am",
+		slug: "meditacao-manha",
 		label: "Meditação",
 		icon: "🧘",
 		color: "#22d3ee",
@@ -136,7 +136,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 5,
 	},
 	{
-		slug: "breakfast",
+		slug: "cafe-manha",
 		label: "Café da manhã",
 		icon: "☕",
 		color: "#f97316",
@@ -149,7 +149,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 99,
 	},
 	{
-		slug: "job-search",
+		slug: "vagas",
 		label: "Vagas",
 		icon: "🔍",
 		color: "#22d3ee",
@@ -162,7 +162,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 7,
 	},
 	{
-		slug: "guitar-1",
+		slug: "guitarra-1",
 		label: "Guitarra",
 		icon: "🎸",
 		color: "#f59e0b",
@@ -175,7 +175,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 6,
 	},
 	{
-		slug: "deep-work-1",
+		slug: "trabalho-focado-1",
 		label: "Trabalho focado 1",
 		icon: "💻",
 		color: "#0ea5e9",
@@ -188,7 +188,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 3,
 	},
 	{
-		slug: "lunch",
+		slug: "almoco",
 		label: "Almoço",
 		icon: "🍽️",
 		color: "#f97316",
@@ -201,7 +201,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 99,
 	},
 	{
-		slug: "deep-work-2",
+		slug: "trabalho-focado-2",
 		label: "Trabalho focado 2",
 		icon: "💻",
 		color: "#0ea5e9",
@@ -214,7 +214,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 3,
 	},
 	{
-		slug: "snack",
+		slug: "lanche",
 		label: "Lanche + Whey",
 		icon: "🥤",
 		color: "#f97316",
@@ -227,7 +227,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 8,
 	},
 	{
-		slug: "guitar-2",
+		slug: "guitarra-2",
 		label: "Guitarra 2",
 		icon: "🎸",
 		color: "#f59e0b",
@@ -240,7 +240,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 6,
 	},
 	{
-		slug: "hyperfocus",
+		slug: "hiperfoco",
 		label: "Hiperfoco livre",
 		icon: "🔥",
 		color: "#f97316",
@@ -253,7 +253,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 4,
 	},
 	{
-		slug: "meal-prep",
+		slug: "preparo-refeicoes",
 		label: "Preparo de refeições",
 		icon: "🥘",
 		color: "#f97316",
@@ -266,7 +266,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 7,
 	},
 	{
-		slug: "weekly-review",
+		slug: "revisao-semanal",
 		label: "Revisão semanal",
 		icon: "📋",
 		color: "#0ea5e9",
@@ -279,7 +279,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 7,
 	},
 	{
-		slug: "chores",
+		slug: "tarefas-casa",
 		label: "Tarefas de casa",
 		icon: "🏠",
 		color: "#a3a3a3",
@@ -292,7 +292,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 1,
 	},
 	{
-		slug: "dinner",
+		slug: "janta",
 		label: "Janta",
 		icon: "🍽️",
 		color: "#f97316",
@@ -305,7 +305,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 99,
 	},
 	{
-		slug: "meditation-pm",
+		slug: "meditacao-noite",
 		label: "Meditação noite",
 		icon: "🧘",
 		color: "#22d3ee",
@@ -318,7 +318,7 @@ export const DEFAULT_BLOCKS: SeedBlock[] = [
 		cutPriority: 5,
 	},
 	{
-		slug: "free-time",
+		slug: "tempo-livre",
 		label: "Tempo livre",
 		icon: "🎮",
 		color: "#22c55e",
